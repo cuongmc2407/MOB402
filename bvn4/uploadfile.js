@@ -13,7 +13,7 @@ http.createServer(function (req, res) {
 
       let filename = files.filetoupload.originalFilename.toString();
       names = filename.split('.');
-      newFilename = names[0] + time + names[1];
+      newFilename = names[0] + time + '.' + names[1];
       console.log(newFilename);
 
       var newpath = 'C:/Users/maich/Desktop/fileupload/' + newFilename;
