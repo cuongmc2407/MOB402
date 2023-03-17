@@ -31,6 +31,14 @@ app.get("/", function (req, res) {
   });
 });
 
+app.get("/bai3", function (req, res) {
+  res.render("defaultView", {
+    layout: "bai3",
+    showContentTinhToan: false,
+    showTitle: true,
+  });
+});
+
 let result = 0;
 
 app.post("/tinhtoan", function (req, res) {
