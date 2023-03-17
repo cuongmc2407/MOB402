@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+
+<body>
+
+    <form action="/tinhtoan" method="POST">
+        <h1>Calculator</h1>
+        input number 1 <input value={{soA}} step= 0.1 type="number" name="num1" required />
+        <br><br>
+        input number 2 <input value={{soB}} step= 0.1 type="number" name="num2" required/>
+        <br><br>
+        Operator
+        <select name="operator">
+            <option value="cong">+</option>
+            <option value="tru">-</option>
+            <option value="nhan">*</option>
+            <option value="chia">/</option>
+        </select>
+        <br> <br>
+        
+        
+        <input class="subscribe-button" type="submit" value="Tinh Toan" />
+        <br> <br>
+        result
+        <input value={{result}} type="number" disabled />
+    </form>
+</body>
+
+</html>

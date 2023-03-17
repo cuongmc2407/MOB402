@@ -1,0 +1,34 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    
+    {{#if showTitle}}
+    <h1>Tieu de trang Web - Hbs Template</h1>
+    {{/if}}
+    
+
+
+      {{{body}}}
+
+
+    {{#if showContentTinhToan}}
+
+      <h2>so A: {{soA}}</h2>
+      <h2>so B: {{soB}}</h2>
+      <h2>phep tinh: {{phepTinh}}</h2>
+      <h2>Ket qua: {{kq}}</h2>
+    {{/if}}
+
+  </body>
+</html>
