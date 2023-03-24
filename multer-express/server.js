@@ -25,22 +25,25 @@ var storage = multer.diskStorage({
     let fileName = file.originalname;
 
     let arr = fileName.split(".");
-    if (
-      arr[1] == "tiff" ||
-      arr[1] == "jfif" ||
-      arr[1] == "bmp" ||
-      arr[1] == "gif" ||
-      arr[1] == "png" ||
-      arr[1] == "jpg" ||
-      arr[1] == "svgz" ||
-      arr[1] == "webp" ||
-      arr[1] == "ico" ||
-      arr[1] == "xbm" ||
-      arr[1] == "pjp" ||
-      arr[1] == "avif"
-    ) {
-      arr[1] = "jpeg";
-    }
+    // if (
+    //   arr[1] == "tiff" ||
+    //   arr[1] == "jfif" ||
+    //   arr[1] == "bmp" ||
+    //   arr[1] == "gif" ||
+    //   arr[1] == "png" ||
+    //   arr[1] == "jpg" ||
+    //   arr[1] == "svgz" ||
+    //   arr[1] == "webp" ||
+    //   arr[1] == "ico" ||
+    //   arr[1] == "xbm" ||
+    //   arr[1] == "pjp" ||
+    //   arr[1] == "avif"
+    // ) {
+    //   arr[1] = "jpeg";
+    // }
+    // if (arr[1] !== 'jpeg') {
+    //   arr[1] = 'jpeg';
+    // }
     let newFileName =
       arr[0] + Date.now() + "." + arr[1];
 
