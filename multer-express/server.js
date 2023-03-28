@@ -10,6 +10,54 @@ app.use(
   bodyParser.urlencoded({ extended: true })
 );
 
+const mongoose = require('mongoose');
+const uri = 'mongodb+srv://cuongmc:Cuong2003@cluster0.8jwy9nc.mongodb.net/cp17301?retryWrites=true&w=majority'
+const labModel = require('./mongoose')
+
+app.get('/add_mongo',  async (req, res) => {
+  await mongoose.connect(uri).then(console.log("ket noi db thanh cong"));
+
+  let lab = new labModel({
+    tieude: 'lab4',
+    noidung: 'bai tap viet API',
+  });
+
+  lab.tailieu = 2;
+
+  try {
+  let kq = await lab.save();
+
+  console.log(kq);
+  let labs = await labModel.find();
+  res.send(labs);
+    
+  } catch (error) {
+    error.log(error);
+  }
+
+});
+
+app.get('/mongo',  async (req, res) => {
+  await mongoose.connect(uri).then(console.log("ket noi db thanh cong"));
+
+  // labModel.updateMany({ten: 'lab3'}, {ten: 'lab3 - new'});
+  // labModel.updateOne({ten: 'lab3'}, {ten: 'lab3 - new'});
+  // labModel.deleteMany({ten: 'lab3'});
+  // labModel.deleteOne({ten: 'lab3'});
+
+
+  try {
+  const labs = await labModel.find();
+  console.log(labs);
+  res.send(labs);
+    
+  } catch (error) {
+    error.log(error);
+  }
+
+});
+
+
 // SET STORAGE
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {

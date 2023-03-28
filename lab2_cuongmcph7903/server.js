@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 var fs = require('fs'); 
 
+
 app.post("/", (req, res) => {
 //   console.log(req.body);
   const soA = Number(req.body.num1);

@@ -1,68 +1,132 @@
-<!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
 
     <title>Registration</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <section>
-        <div class="container mt-5 pt-5">
-            <div class="row">
-                <div class="col-12 col-sm-7 col-md-6 m-auto">
-                    <div class="card border-0 shadow">
-                        <div class="card-body">
-                            <h1>Registration</h1>
+      <div class="container mt-5 pt-5">
+        <div class="row">
+          <div
+            class="col-12 col-sm-7 col-md-6 m-auto"
+          >
+            <div class="card border-0 shadow">
+              <div class="card-body">
+                <h1>Registration</h1>
 
-                            <form action="/upload" method="POST" enctype="multipart/form-data" class="needs-validation">
-                                <div class="form-group was-validated">
-                                    <label class="form-label" for="email">Email address</label>
-                                    <input class="form-control" type="email" id="email" name="email" required>
-                                    <div class="invalid-feedback">
-                                        Please enter your email address
-                                    </div>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <label class="form-label" for="password">Password</label>
-                                    <input class="form-control" type="password" id="password" name="password" required>
-                                    <div class="invalid-feedback">
-                                        Please enter your password
-                                    </div>
-                                </div>
-                                <div class="form-group was-validated">
-                                    <label class="form-label" for="name">Full Name</label>
-                                    <input class="form-control" type="text" id="name" required>
-                                    <div class="invalid-feedback">
-                                        Please enter your full name
-                                    </div>
-                                </div>
-
-                                <label class="form-label" for="name">Avatar</label>
-                                <br>
-                                <input type="file" name="myFile" accept="image/*" required>
-
-
-
-                                <div class="text-center mt-3">
-                                    <input class="btn btn-success w-100" type="submit" value="Registration">
-                                </div>
-
-                            </form>
-                        </div>
+                <form
+                  action="/upload"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  class="needs-validation"
+                >
+                  <div
+                    class="form-group was-validated"
+                  >
+                    <label
+                      class="form-label"
+                      for="email"
+                    >Email address</label>
+                    <input
+                      class="form-control"
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please enter your email
+                      address
                     </div>
-                </div>
+                  </div>
+                  <div
+                    class="form-group was-validated"
+                  >
+                    <label
+                      class="form-label"
+                      for="password"
+                    >Password</label>
+                    <input
+                      class="form-control"
+                      type="password"
+                      id="password"
+                      name="password"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please enter your password
+                    </div>
+                  </div>
+                  <div
+                    class="form-group was-validated"
+                  >
+                    <label
+                      class="form-label"
+                      for="name"
+                    >Full Name</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="name"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please enter your full name
+                    </div>
+                  </div>
+
+                  <label
+                    class="form-label"
+                    for="name"
+                  >Avatar</label>
+                  <br />
+                  <input
+                    type="file"
+                    name="myFile"
+                    accept="image/*"
+                    required
+                  />
+
+                  <div class="text-center mt-3">
+                    <input
+                      class="btn btn-success w-100"
+                      type="submit"
+                      value="Registration"
+                    />
+                  </div>
+
+                </form>
+                {{result}}
+                
+                <form action="/login" method="post">
+                                <input class="btn btn-link w-100" type="submit" value="Login">
+                            </form>
+                
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
-        crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 
 </html>
