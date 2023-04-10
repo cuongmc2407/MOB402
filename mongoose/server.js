@@ -62,7 +62,7 @@ app.post("/edit", async (req, res) => {
     _id: req.body.id,
   });
 
-  NhanVienModel.updateOne(nv, req.body).then();
+  await NhanVienModel.updateOne(nv, req.body);
 
 
   res.redirect('/');
@@ -73,13 +73,10 @@ app.get("/edit/:id", async (req, res) => {
 
   const nv = await NhanVienModel.findOne({
     _id: req.params.id,
-  });
+  }).lean();
   res.render("defaultView", {
     layout: "edit",
-    ten: nv.ten,
-    diachi: nv.diachi,
-    luong: nv.luong,
-    id: nv._id,
+    nv: nv
   });
 });
 
@@ -93,9 +90,9 @@ app.get("/delete/:id", async (req, res) => {
 
   console.log(req.params.id);
 
-  NhanVienModel.deleteOne({
+  await NhanVienModel.deleteOne({
     _id: req.params.id,
-  }).then();
+  });
   res.redirect("/");
 });
 

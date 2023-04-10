@@ -17,12 +17,17 @@
         <div class="bg-white" id="sidebar-wrapper">
 
             <div class="list-group list-group-flush my-3">
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active"><i
-                        class="fas fa-tachometer-alt me-2"></i>Users</a>
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fas fa-project-diagram me-2"></i>Products</a>
-                <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
-                        class="fas fa-power-off me-2"></i>Logout</a>
+                <a href="/manager" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                        class="fas fa-tachometer-alt me-2"></i>Sản phẩm</a>
+                <a href="/managerUser"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-project-diagram me-2"></i>Tài khoản</a>
+                <a href="/info"
+                    class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-bookmark"></i> Thông tin cá nhân</a>
+
+                <a href="/" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i
+                        class="fas fa-power-off me-2"></i>Đăng xuất</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -32,14 +37,13 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
-                    <h2 class="fs-2 m-0">User</h2>
+                    <h2 class="fs-2 m-0">Sản phẩm</h2>
                 </div>
 
             </nav>
             <div class="container-fluid px-4">
-                <button type="button" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-warning">Edit</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <a href="/addproduct"><button type="button" class="btn btn-primary">Thêm mới sản phẩm</button></a>
+
             </div>
 
 
@@ -47,43 +51,43 @@
 
 
                 <div class="row my-5">
-                    <h3 class="fs-4 mb-3">List user</h3>
+                    <h3 class="fs-4 mb-3">Danh sách sản phẩm</h3>
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
-                                <tr>
-                                    <th scope="col" width="50">#</th>
-                                    {{!-- <th scope="col">Avatar</th> --}}
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Password</th>
-                                </tr>
+                                <th>STT</th>
+                                <th>Tên</th>
+                                <th>Giá</th>
+                                <th>Mô tả</th>
+                                <th>Quản trị</th>
                             </thead>
                             <tbody>
+
+                                {{#each products}}
+
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>
+                                        <span class="stt"></span>
+
+                                        <script>
+                                            var stt = {{@index}} + 1;
+                                            document.getElementsByClassName("stt")[{{ @index }}].innerHTML = stt;
+                                        </script>
+
+                                    </td>
+                                    <td>{{this.name}}</td>
+                                    <td>{{this.price}}</td>
+                                    <td>{{this.desc}}</td>
+                                    <td>
+                                        <a href="/editproduct/{{this._id}}" class="btn btn-primary">Sửa</a>
+                                        <a href="/deleteproduct/{{this._id}}" onclick="return confirm('Are you sure?')"
+                                            class="btn btn-danger">Xóa</a>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                {{else}}
+                                Sorry, nobody is here.
+                                {{/each}}
+
                             </tbody>
                         </table>
                     </div>

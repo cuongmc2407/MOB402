@@ -1,126 +1,57 @@
-const express = require("express");
-const app = express();
-const port = 8080;
-const bodyParser = require("body-parser");
-const multer = require("multer");
+//var createError = require('http-errors');
+var express = require('express');
+const expressHbs = require('express-handlebars');
+const bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var config = require('./config/database');
 
-app.use(
-  bodyParser.urlencoded({ extended: true })
-);
+var indexRouter = require('./routes/index');
+var apiRouter = require('./routes/api');
 
-var expressHbs = require("express-handlebars");
-var fs = require("fs");
-app.use(express.static("public"));
+var app = express();
 
-const listUser = [
-  {
-    id: "1",
-    avatar: "",
-    email: "admin@admin.com",
-    password: "admin",
-  },
-];
-
-// SET STORAGE
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    dir = "./uploads";
-
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, "uploads");
-  },
-  filename: function (req, file, cb) {
-    let fileName = file.originalname;
-    let arr = fileName.split(".");
-    let newFileName =
-      arr[0] + Date.now() + "." + arr[1];
-
-    console.log(newFileName);
-    cb(null, newFileName);
-  },
-});
-
-var upload = multer({ storage: storage });
-
+// #config view engine
 app.engine(
   ".hbs",
   expressHbs.engine({
     extname: "hbs",
-    defaultLayout: "login",
+    defaultLayout: "sign_in",
     layoutsDir: "views/layouts/",
   })
 );
 
 app.set("view engine", ".hbs");
 app.set("views", "./views");
+app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}))
 
-app.get("/login", function (req, res) {
-  res.render("defaultView", {
-    layout: "login",
-  });
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+
+app.use('/', indexRouter);
+app.use('/api', apiRouter);
+
+mongoose.connect(config.database, { useNewUrlParser: true, useUnifiedTopology: true }).then(console.log('connect to database'));
+
+// var cors = require('cors')
+
+// app.use(cors());
+
+app.use(passport.initialize());
+
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  console.log('404 - Khong tim thay trang')
+  next();
 });
 
-app.post("/login", function (req, res) {
-    res.render("defaultView", {
-      layout: "login",
-    });
-  });
+module.exports = app;
 
-app.post("/registration", function (req, res) {
-  res.render("defaultView", {
-    layout: "registration",
-  });
-});
-app.post("/manager", function (req, res) {
-  console.log(req.body);
-  for (var i = 0; i < listUser.length; i++) {
-    if (
-      listUser[i].email == req.body.email &&
-      listUser[i].password == req.body.password
-    ) {
-      res.render("defaultView", {
-        layout: "manager",
-      });
-    }
-    else{
-        res.render("defaultView", {
-            layout: "login",
-            result: 'Email or password is not correct',
-          });
-    }
-  }
-});
-
-app.post(
-  "/upload",
-  upload.single("myFile"),
-  (req, res, next) => {
-    const file = req.file;
-    const newUser = {
-      id: listUser[listUser.length - 1].id + 1,
-      email: req.body.email,
-      password: req.body.password,
-    };
-    listUser.push(newUser);
-    result = 'Registration successful';
-    if (!file) {
-      const error = new Error(
-        "Please upload a file"
-      );
-      error.httpStatusCode = 400;
-      result = 'Registration failed';
-    }
-    res.render("defaultView", {
-        layout: "registration",
-        result: result,
-      });
-  }
-);
+const port = 8080;
 
 app.listen(port, () => {
-  console.log(
-    `Example app listening on port ${port}`
-  );
+  console.log(`Example app listening on port ${port}`)
 });

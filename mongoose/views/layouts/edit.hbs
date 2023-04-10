@@ -16,13 +16,13 @@
     <div class="container mt-3">
      <h3 class="text-center">Cập nhật nhân viên</h3>
      <form action="/edit" method="post">
-        <input type="hidden" name="id" value="{{id}}">
+         <input type="hidden" name="id" value="{{nv._id}}">
          <label for="ten">Tên</label>
-         <input type="text" name="ten" value="{{ten}}" class="form-control">
+         <input type="text" name="ten" value="{{nv.ten}}" class="form-control" required>
          <label for="diachi">Địa chỉ</label>
-         <input type="text" name="diachi" value="{{diachi}}" class="form-control">
+         <input type="text" name="diachi" value="{{nv.diachi}}" class="form-control">
          <label for="luong">Lương</label>
-         <input type="text" name="luong" value="{{luong}}" class="form-control">
+         <input type="number" name="luong" value="{{nv.luong}}" class="form-control">
          <input type="submit" value="Cập nhật" class="btn btn-primary mt-2"> <br>
          <a href="/">Quay lại?</a>
      </form>

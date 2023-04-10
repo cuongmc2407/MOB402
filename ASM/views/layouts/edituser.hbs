@@ -1,0 +1,60 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+
+    <title>Registration</title>
+</head>
+
+<body>
+    <section>
+        <div class="container mt-5 pt-5">
+            <div class="row">
+                <div class="col-12 col-sm-7 col-md-6 m-auto">
+                    <div class="card border-0 shadow">
+                        <div class="card-body">
+                            <h1>Sửa tài khoản</h1>
+                            <form action="/edituser" method="POST" class="needs-validation" enctype="multipart/form-data">
+                                <input type="hidden" name="id" value="{{user._id}}">
+
+                                <label class="form-label" for="email">Email</label>
+                                <input class="form-control" type="email" id="email" name="email" value="{{user.email}}" required />
+
+                                <label class="form-label" for="password">Mật khẩu</label>
+                                <input class="form-control" type="password" id="password" name="password"  required />
+
+                                <label class="form-label" for="name">Họ Tên</label>
+                                <input class="form-control" type="text" id="name" name="name" value="{{user.fullname}}" required />
+
+                                <label class="form-label" for="name">Ảnh</label>
+                                <br />
+                                <input type="file" name="myFile" accept="image/*" />
+
+
+
+                                <div class="text-center mt-3">
+                                    <input class="btn btn-success w-100" type="submit" value="Sửa" />
+                                </div>
+
+
+                            </form>
+
+                            <a href="/managerUser"> <input class="btn btn-link w-100" type="submit" value="Quay lại?"></a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

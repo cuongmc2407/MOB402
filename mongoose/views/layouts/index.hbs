@@ -15,8 +15,11 @@
   <body>
     <div class="container mt-3">
       <a href="/add" class="btn btn-info">Thêm mới nhân viên</a>
+      <br>
+      <br>
       <table class="table">
         <thead>
+          <th>STT</th>
           <th>Tên</th>
           <th>Địa chỉ</th>
           <th>Lương</th>
@@ -26,6 +29,15 @@
           
             {{#each arrNV}}
             <tr>
+                <td>
+                  <span class="stt"></span>
+                  
+                  <script>
+                    var stt = {{@index}} + 1;
+                    document.getElementsByClassName("stt")[{{@index}}].innerHTML = stt;
+                  </script>
+
+                </td>
                 <td>{{this.ten}}</td>
                 <td>{{this.diachi}}</td>
                 <td>{{this.luong}}</td>
