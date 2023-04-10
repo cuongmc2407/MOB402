@@ -16,7 +16,7 @@ var fs = require("fs");
 
 const bodyParser = require("body-parser");
 
-const request = require("request");
+// const request = require("request");
 
 // // parse requests of content-type - application/json
 
@@ -77,46 +77,45 @@ router.post(
   upload.single("myFile"),
   async function (req, res) {
     console.log(req.body);
-    addUser(req, res);
+    if (!req.body.email || !req.body.password) {
+      // res.json({ success: false, msg: 'Please pass username and password.' });
+      signUpObj.notify =
+        "Please pass username and password.";
+      return res.render("defaultView", signUpObj);
+    } else {
+      // check username available
+      let check = await User.findOne({
+        email: req.body.email,
+      })
+        .lean()
+        .exec();
+      console.log(
+        "check username available ",
+        check
+      );
+      if (check) {
+        signUpObj.notify =
+          "email available. Try another email";
+        return res.render("defaultView", signUpObj);
+      }
+  
+      console.log(req.file);
+      var newUser = new User({
+        email: req.body.email,
+        password: req.body.password,
+        fullname: req.body.name,
+        avatar: req.file.filename,
+      });
+      // save the user
+      await newUser.save();
+      return res.redirect("/");
+    }
     // res.json({ success: true, msg: 'Successful created new user.' });
-    return res.redirect("/");
+    
   }
 );
 
-async function addUser(req, res) {
-  if (!req.body.email || !req.body.password) {
-    // res.json({ success: false, msg: 'Please pass username and password.' });
-    signUpObj.notify =
-      "Please pass username and password.";
-    return res.render("defaultView", signUpObj);
-  } else {
-    // check username available
-    let check = await User.findOne({
-      email: req.body.email,
-    })
-      .lean()
-      .exec();
-    console.log(
-      "check username available ",
-      check
-    );
-    if (check) {
-      signUpObj.notify =
-        "email available. Try another email";
-      return res.render("defaultView", signUpObj);
-    }
 
-    console.log(req.file);
-    var newUser = new User({
-      email: req.body.email,
-      password: req.body.password,
-      fullname: req.body.name,
-      avatar: req.file.filename,
-    });
-    // save the user
-    await newUser.save();
-  }
-}
 
 // #SIGN IN
 const signInObj = {
@@ -151,18 +150,18 @@ router.post("/", async function (req, res) {
     // function (err, isMatch) {
     if (user.password == req.body.password) {
       // if user is found and password is right create a token
-      var token = jwt.sign(
-        user.toJSON(),
-        config.secret
-      );
+      // var token = jwt.sign(
+      //   user.toJSON(),
+      //   config.secret
+      // );
       // return the information including token as JSON
       // res.json({ success: true, token: 'JWT ' + token });
       // req.session.authorization =
       //   "JWT " + token;
-      console.log(req.session);
-      homeObj.token = "JWT " + token;
+      // console.log(req.session);
+      // homeObj.token = "JWT " + token;
       homeObj.user = user.toObject();
-      console.log("homeObj", homeObj);
+      // console.log("homeObj", homeObj);
 
       //res.header('Authorization', 'JWT ' + token);
 
@@ -172,21 +171,21 @@ router.post("/", async function (req, res) {
       //   email: '',
       //   fullname: '',
       // }
-      request.get(
-        "http://localhost:8080/manager",
-        {
-          headers: {
-            Authorization: "JWT " + token,
-          },
-        },
-        function (error, response, body) {
+      // request.get(
+      //   "http://localhost:8080/manager",
+      //   {
+      //     headers: {
+      //       Authorization: "JWT " + token,
+      //     },
+      //   },
+      //   function (error, response, body) {
           isAdmin = user.admin;
-          info = user.toJSON();
-          return res.send(body);
-        }
-      );
-
-      //return res.redirect("/api/book");
+      //     info = user.toJSON();
+      //     return res.send(body);
+      //   }
+      // );
+      info = user.toJSON();
+      return res.redirect("/manager");
     } else {
       // res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
       signInObj.notify =
@@ -198,7 +197,7 @@ router.post("/", async function (req, res) {
   }
 });
 
-// #BOOK
+// addproduct
 router.post(
   "/addproduct",
   async function (req, res) {
@@ -235,21 +234,55 @@ router.get("/addproduct", function (req, res) {
     layout: "addproduct",
   });
 });
+//add user
 router.get("/adduser", function (req, res) {
   res.render("defaultView", {
-    layout: "registration",
+    layout: "adduser",
     admin: true,
     action: "/adduser",
   });
 });
 router.post(
   "/adduser",
+  upload.single("myFile"),
   async function (req, res) {
-    await addUser(req, res);
-    res.redirect("/managerUser");
+    console.log(req.body);
+    if (!req.body.email || !req.body.password) {
+      // res.json({ success: false, msg: 'Please pass username and password.' });
+      return res.render("defaultView", {layout: 'adduser', notify: 'Please pass username and password.'});
+    } else {
+      // check username available
+      let check = await User.findOne({
+        email: req.body.email,
+      })
+        .lean()
+        .exec();
+      console.log(
+        "check username available ",
+        check
+      );
+      if (check) {
+        signUpObj.notify =
+          "email available. Try another email";
+        return res.render("defaultView", signUpObj);
+      }
+  
+      console.log(req.file);
+      var newUser = new User({
+        email: req.body.email,
+        password: req.body.password,
+        fullname: req.body.name,
+        avatar: req.file.filename,
+      });
+      // save the user
+      await newUser.save();
+      return res.redirect("/managerUser");
+    }
+    // res.json({ success: true, msg: 'Successful created new user.' });
+    
   }
 );
-
+//editproduct
 router.get(
   "/editproduct/:id",
   async (req, res) => {
@@ -272,7 +305,7 @@ router.post("/editproduct", async (req, res) => {
 
   res.redirect("/manager");
 });
-
+//edit user
 router.get("/edituser/:id", async (req, res) => {
   const user = await User.findOne({
     _id: req.params.id,
@@ -304,7 +337,7 @@ router.post("/edituser", upload.single("myFile"), async (req, res) => {
 
   res.redirect("/managerUser");
 });
-
+//delete product
 router.get(
   "/deleteproduct/:id",
   async (req, res) => {
@@ -314,6 +347,7 @@ router.get(
     res.redirect("/manager");
   }
 );
+//delete user
 router.get(
   "/deleteuser/:id",
   async (req, res) => {
@@ -333,9 +367,9 @@ router.get("/info", async function (req, res) {
 });
 
 router.get("/manager", async function (req, res) {
-  passport.authenticate("jwt", {
-    session: false,
-  });
+  // passport.authenticate("jwt", {
+  //   session: false,
+  // });
   console.log("Vao manager");
   // console.log("headers: ", req.headers);
 
